@@ -1,0 +1,17 @@
+/**
+ * @file json_parser.h
+ * @brief JSON parser
+ */
+
+#pragma once
+
+#include <string>
+
+namespace json
+{
+  class JsonParser
+  {
+  public:
+    virtual std::string Get(std::string target, std::string key) const = 0;
+  };
+}
