@@ -9,10 +9,8 @@
 
 #include "../json/json_parser.h"
 
-namespace json
-{
-  class JsonParserImpl : public JsonParser
-  {
-    std::string Get(std::string target, std::string key) const noexcept override;
-  };
-}
+namespace json {
+class JsonParserImpl : public JsonParser {
+  std::string Get(std::string target, std::string key) const noexcept override;
+};
+}  // namespace json
