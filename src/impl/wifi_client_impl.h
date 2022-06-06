@@ -10,10 +10,8 @@
 
 #include "../wifi/wifi_client.h"
 
-namespace wifi
-{
-  class WifiClientImpl : public WifiClient
-  {
-    bool Init(std::string ssid, std::string password) const noexcept override;
-  };
-}
+namespace wifi {
+class WifiClientImpl : public WifiClient {
+  bool Init(std::string ssid, std::string password) const noexcept override;
+};
+}  // namespace wifi

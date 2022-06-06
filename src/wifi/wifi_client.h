@@ -7,11 +7,9 @@
 
 #include <string>
 
-namespace wifi
-{
-  class WifiClient
-  {
-  public:
-    virtual bool Init(std::string ssid, std::string password) const = 0;
-  };
-}
+namespace wifi {
+class WifiClient {
+ public:
+  virtual bool Init(std::string ssid, std::string password) const = 0;
+};
+}  // namespace wifi
