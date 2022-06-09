@@ -23,9 +23,11 @@ target_link_libraries(
 target_include_directories(google_test PUBLIC ${GTEST_INCLUDE_DIRS})
 target_include_directories(google_test PUBLIC
     src/standard
+    src/aws_iot
     src/json
     src/uart
     src/wifi
+    test/aws_iot
     test/json
     test/wifi
 )
