@@ -4,6 +4,6 @@ services:
   arduino:
     build: .
     volumes:
-      - ../:/workspace:cached
+      - ../:/esp32_aws_iot_blink:cached
       - ../.devcontainer/arduino-cli.yaml:/root/.arduino15/arduino-cli.yaml
     command: /bin/sh -c "while sleep 1000; do :; done"
