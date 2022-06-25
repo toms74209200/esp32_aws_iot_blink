@@ -27,13 +27,8 @@ RUN arduino-cli core install esp32:esp32
 RUN arduino-cli lib install ArduinoSTL --config-file /root/.arduino15/arduino-cli.yaml
 
 # install AWS Pub/Sub libraries
-RUN arduino-cli lib install ArduinoWebsockets --config-file /root/.arduino15/arduino-cli.yaml \
-    && arduino-cli lib install PubSubClient --config-file /root/.arduino15/arduino-cli.yaml \
-    && arduino-cli lib install ArduinoJson --config-file /root/.arduino15/arduino-cli.yaml \
-    && cd /root/Arduino/libraries \
-    && curl -sSL -O https://github.com/odelot/aws-mqtt-websockets/archive/refs/tags/v1.3.0.tar.gz \
-    && tar xzf v1.3.0.tar.gz && rm v1.3.0.tar.gz \
-    && git clone https://github.com/odelot/aws-sdk-arduino.git -b master
+RUN arduino-cli lib install MQTT --config-file /root/.arduino15/arduino-cli.yaml \
+    && arduino-cli lib install ArduinoJson --config-file /root/.arduino15/arduino-cli.yaml
 
 FROM arduino-dev AS google-test
 

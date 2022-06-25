@@ -4,7 +4,7 @@
 	"name": "Arduino dev",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "arduino",
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/esp32_aws_iot_blink",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
 

@@ -3,10 +3,10 @@ set(CMAKE_C_COMPILER "/usr/bin/clang" CACHE STRING "clang compiler" FORCE)
 set(CMAKE_CXX_COMPILER "/usr/bin/clang++" CACHE STRING "clang++ compiler" FORCE)
 project(google_test CXX)
 find_package(GTest)
-file(GLOB_RECURSE SRC_FILES RELATIVE /workspace src/*/*.cpp)
+file(GLOB_RECURSE SRC_FILES RELATIVE /esp32_aws_iot_blink src/*/*.cpp)
 list(FILTER SRC_FILES EXCLUDE REGEX ".*impl.cpp")
 message(STATUS "Target source files: ${SRC_FILES}")
-file(GLOB_RECURSE TEST_FILES RELATIVE /workspace test/*/*_test.cpp)
+file(GLOB_RECURSE TEST_FILES RELATIVE /esp32_aws_iot_blink test/*/*_test.cpp)
 message(STATUS "Test files: ${TEST_FILES}")
 add_executable(
     google_test
