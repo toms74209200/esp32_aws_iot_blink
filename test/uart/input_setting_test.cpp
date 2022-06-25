@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-#include "aws_iot_client_mock.h"
 #include "input_setting.h"
 #include "json_parser_mock.h"
 #include "uart_client_mock.h"
@@ -32,11 +31,8 @@ TEST(InputSettingRecvWifiSettingTest, Normal) {
       .Times(AtLeast(1))
       .WillRepeatedly(Return(true));
 
-  aws_iot::AwsIotClientMock aws_iot_client_mock;
-
   uart::InputSetting input_setting =
-      uart::InputSetting(aws_iot_client_mock, json_parser_mock,
-                         uart_client_mock, wifi_client_mock);
+      uart::InputSetting(json_parser_mock, uart_client_mock, wifi_client_mock);
   input_setting.RecvWifiSetting();
 }
 
@@ -45,51 +41,41 @@ TEST(InputSettingRecvAwsSettingTest, Normal) {
   EXPECT_CALL(json_parser_mock, Get(_, "endpoint"))
       .Times(AtLeast(1))
       .WillRepeatedly(Return("endpoint"));
-  EXPECT_CALL(json_parser_mock, Get(_, "cert"))
+  EXPECT_CALL(json_parser_mock, Get(_, "cert_ca"))
       .Times(AtLeast(1))
-      .WillRepeatedly(Return("cert"));
-  EXPECT_CALL(json_parser_mock, Get(_, "key"))
+      .WillRepeatedly(Return("cert_ca"));
+  EXPECT_CALL(json_parser_mock, Get(_, "cert_crt"))
       .Times(AtLeast(1))
-      .WillRepeatedly(Return("key"));
-  EXPECT_CALL(json_parser_mock, Get(_, "secret"))
+      .WillRepeatedly(Return("cert_crt"));
+  EXPECT_CALL(json_parser_mock, Get(_, "cert_private"))
       .Times(AtLeast(1))
-      .WillRepeatedly(Return("secret"));
-  EXPECT_CALL(json_parser_mock, Get(_, "device"))
+      .WillRepeatedly(Return("cert_private"));
+  EXPECT_CALL(json_parser_mock, GetInt(_, "port"))
       .Times(AtLeast(1))
-      .WillRepeatedly(Return("device"));
+      .WillRepeatedly(Return(8883));
+  EXPECT_CALL(json_parser_mock, Get(_, "thing_name"))
+      .Times(AtLeast(1))
+      .WillRepeatedly(Return("thing_name"));
 
   uart::UartClientMock uart_client_mock;
   std::vector<std::string> return_data = {
-      "{\"endpoint\":\"endpoint\",\"cert\":\"cert\",\"key\":\"key\",\"secret\":"
-      "\"secret\",\"device\":\"device\"}"};
+      "{\"endpoint\":\"endpoint\",\"cert_ca\":\"cert_ca\",\"cert_crt\":\"cert_"
+      "crt\",\"cert_private\":"
+      "\"cert_private\",\"port\":8883,\"thing_name\":\"thing_name\"}"};
   EXPECT_CALL(uart_client_mock, RecvData())
       .Times(AtLeast(1))
       .WillRepeatedly(Return(return_data));
 
-  aws_iot::AwsIotClientMock aws_iot_client_mock;
-  EXPECT_CALL(aws_iot_client_mock, Init())
-      .Times(AtLeast(1))
-      .WillRepeatedly(Return(true));
-  EXPECT_CALL(aws_iot_client_mock, SetEndPoint("endpoint"))
-      .Times(AtLeast(1))
-      .WillRepeatedly(ReturnRef(aws_iot_client_mock));
-  EXPECT_CALL(aws_iot_client_mock, SetCert("cert"))
-      .Times(AtLeast(1))
-      .WillRepeatedly(ReturnRef(aws_iot_client_mock));
-  EXPECT_CALL(aws_iot_client_mock, SetAwsKey("key"))
-      .Times(AtLeast(1))
-      .WillRepeatedly(ReturnRef(aws_iot_client_mock));
-  EXPECT_CALL(aws_iot_client_mock, SetSecret("secret"))
-      .Times(AtLeast(1))
-      .WillRepeatedly(ReturnRef(aws_iot_client_mock));
-  EXPECT_CALL(aws_iot_client_mock, SetDevice("device"))
-      .Times(AtLeast(1))
-      .WillRepeatedly(ReturnRef(aws_iot_client_mock));
-
   wifi::WifiClientMock wifi_client_mock;
 
   uart::InputSetting input_setting =
-      uart::InputSetting(aws_iot_client_mock, json_parser_mock,
-                         uart_client_mock, wifi_client_mock);
-  input_setting.RecvAwsSetting();
+      uart::InputSetting(json_parser_mock, uart_client_mock, wifi_client_mock);
+  aws_iot::AwsIotSettings actual_result = input_setting.RecvAwsSetting();
+
+  ASSERT_EQ(actual_result.end_point, "endpoint");
+  ASSERT_EQ(actual_result.cert_ca, "cert_ca");
+  ASSERT_EQ(actual_result.cert_crt, "cert_crt");
+  ASSERT_EQ(actual_result.cert_private, "cert_private");
+  ASSERT_EQ(actual_result.port, 8883);
+  ASSERT_EQ(actual_result.thing_name, "thing_name");
 }
