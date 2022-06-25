@@ -9,5 +9,6 @@ class UartClientMock : public UartClient {
  public:
   MOCK_CONST_METHOD0(RecvData, std::vector<std::string>());
   MOCK_CONST_METHOD1(SendData, bool(const std::string data));
+  MOCK_CONST_METHOD0(HasReceived, bool());
 };
 }  // namespace uart

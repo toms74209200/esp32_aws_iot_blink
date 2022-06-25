@@ -12,5 +12,6 @@
 namespace json {
 class JsonParserImpl : public JsonParser {
   std::string Get(std::string target, std::string key) const noexcept override;
+  int32_t GetInt(std::string target, std::string key) const noexcept override;
 };
 }  // namespace json

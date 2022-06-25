@@ -7,11 +7,9 @@
 namespace aws_iot {
 class AwsIotClientMock : public AwsIotClient {
  public:
-  MOCK_METHOD1(SetEndPoint, AwsIotClient&(std::string end_point));
-  MOCK_METHOD1(SetCert, AwsIotClient&(std::string cert));
-  MOCK_METHOD1(SetAwsKey, AwsIotClient&(std::string aws_key));
-  MOCK_METHOD1(SetSecret, AwsIotClient&(std::string secret));
-  MOCK_METHOD1(SetDevice, AwsIotClient&(std::string device));
-  MOCK_CONST_METHOD0(Init, bool());
+  MOCK_METHOD1(Init, bool(const AwsIotSettings aws_iot_settings));
+  MOCK_METHOD1(Subscribe, void(const std::string& topic_name));
+  MOCK_METHOD2(Publish,
+               void(const std::string& topic_name, const std::string& payload));
 };
 }  // namespace aws_iot

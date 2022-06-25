@@ -14,7 +14,7 @@ bool wifi::WifiClientImpl::Init(std::string ssid,
   for (int i = 0; i < 600; i++) {
     Serial.print(".");
     if (WiFi.isConnected()) {
-      Serial.println("");
+      Serial.println("\nconnected");
       return true;
     }
     delay(100);

@@ -17,5 +17,6 @@ class UartClientImpl : public UartClient {
   };
   std::vector<std::string> RecvData() const noexcept override;
   bool SendData(const std::string data) const noexcept override;
+  bool HasReceived() const noexcept override;
 };
 }  // namespace uart
